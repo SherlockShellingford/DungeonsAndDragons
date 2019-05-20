@@ -3,7 +3,7 @@ import javafx.util.Pair;
 public class Monster extends Enemy{
     private int visionRange;
     public Monster(String Name, int health, int currenthealth, int attack, int defense, Pair<Integer,Integer> position, int expirienceValue, char tile, int visionRange){
-        this.Name=Name;
+        this.name=Name;
         this.health=health;
         this.currentHealth=currenthealth;
         this.attack=attack;
