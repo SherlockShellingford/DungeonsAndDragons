@@ -1,26 +1,25 @@
 import javafx.util.Pair;
-
 import java.util.List;
 
 public class Warrior extends Player {
     private int CD;
     private int remainingCD;
 
-    public Warrior(String name, UIDataContext observer, int health, int currentHealth,
-                   int attack, int defense, Pair<Integer, Integer> position, int XP, int level, int CD, int remainingCD){
+    public Warrior(String name, /*UIDataContext observer,8*/ int health, int attack, int defense, int CD, Pair<Integer, Integer> position){
         this.name = name;
-        this.observer = observer;
+        //this.observer = observer;
         this.health = health;
         this.currentHealth = health;
         this.attack = attack;
         this.defense = defense;
         this.position = position;
-        this.XP = XP;
-        this.level = level;
+        this.XP = 0;
+        this.level = 1;
         this.CD = CD;
-        this.remainingCD = remainingCD;
+        this.remainingCD = 0;
     }
 
+    @Override
     public void levelUp(){
         remainingCD = 0;
         XP -= 50*level;
@@ -31,14 +30,24 @@ public class Warrior extends Player {
         defense += 3*level;
     }
 
-    public boolean ability(List<Enemy> enemies){
+    @Override
+    public boolean ability(List<Enemy> enemies){    //TODO: update uml
         if (remainingCD > 0) {
             return false;
         }
-        else {
-            remainingCD  = CD;
-            currentHealth += 2 * defense;
+        remainingCD  = CD;
+        currentHealth += 2 * defense;
+        if (currentHealth > health){
+            currentHealth = health;
         }
-        if (currentHealth>)
+        return true;
+    }
+
+    @Override
+    public void onGameTick() {
+        remainingCD -= 1;
+        if (remainingCD < 0){
+            remainingCD = 0;
+        }
     }
 }
