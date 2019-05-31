@@ -7,9 +7,9 @@ public class Rogue extends Player{
     private int currentEnergy;
     private int cost;
 
-    public Rogue(String name, /*UIDataContext observer,8*/ int health, int attack, int defense, Pair<Integer, Integer> position, int cost){
+    public Rogue(String name, UIDataContext observer, int health, int attack, int defense, Pair<Integer, Integer> position, int cost){
         this.name = name;
-        //this.observer = observer;
+        this.observer = observer;
         this.health = health;
         this.currentHealth = health;
         this.attack = attack;
@@ -39,19 +39,25 @@ public class Rogue extends Player{
         }
         currentEnergy -= cost;
         Enemy[] a = new Enemy[enemies.size()];
-        int i = 0;
+        int i = -1;
         for (Enemy enemy : enemies) {
-            if ((int) range(enemy) <= range) {
-                a[i] = enemy;
+            if ((int) range(enemy) < range) {
                 i++;
+                a[i] = enemy;
+
             }
         }
-        i--;
-        while (i > 0){
-            int dmg = attack - RandomNumber.getInstance().nextInt(a[r].defense);
+
+        while (i >= 0){
+            int dmg = attack - RandomNumber.getInstance().nextInt(a[i].defense);
             if (dmg > 0){
-                a[i].health -= dmg;
+                a[i].currentHealth -= dmg;
+                observer.update(name+" hit "+a[i].name+" with a fan of knives, dealing "+dmg+" damage.");
+                if(a[i].currentHealth<=0){
+                    observer.update(a[i].name+" died");
+                }
             }
+            i=i-1;
         }
         return true;
     }
@@ -62,5 +68,9 @@ public class Rogue extends Player{
         if (currentEnergy > maxEnergy){
             currentEnergy = maxEnergy;
         }
+    }
+    @Override
+    public String toString(){
+        return name+"      Health: "+currentHealth+"/"+health+"     Attack: "+attack+"    Defense: "+defense+"     XP: "+XP+"/"+50*level+"\n   Energy: "+currentEnergy+"/"+maxEnergy+"         Level: "+level;
     }
 }

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class MemoryManager {
 
-    public char[][] getBoard(String level){
+    public static char[][] getBoard(String level){
         char[][] board;
         File file = new File(System.getProperty("user.dir")+"/" + level + ".txt");
         Scanner sc;
@@ -38,7 +38,7 @@ public class MemoryManager {
                 s = sc.nextLine();
             }
             for (int j = 0; j < w; j++) {
-                board[i][j] = s.charAt(i);
+                board[i][j] = s.charAt(j);
             }
         }
         return board;

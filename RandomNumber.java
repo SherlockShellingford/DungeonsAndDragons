@@ -12,6 +12,9 @@ public class RandomNumber {
             ourInstance=new RandomND();
         }
     }
+    public static void setRandom(int[] arr){
+        ourInstance=new RandomDCode(arr);
+    }
     private RandomNumber() {
     }
 }

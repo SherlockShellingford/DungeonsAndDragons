@@ -5,9 +5,9 @@ public class Warrior extends Player {
     private int CD;
     private int remainingCD;
 
-    public Warrior(String name, /*UIDataContext observer,8*/ int health, int attack, int defense, int CD, Pair<Integer, Integer> position){
+    public Warrior(String name, UIDataContext observer, int health, int attack, int defense, int CD, Pair<Integer, Integer> position){
         this.name = name;
-        //this.observer = observer;
+        this.observer = observer;
         this.health = health;
         this.currentHealth = health;
         this.attack = attack;
@@ -49,5 +49,9 @@ public class Warrior extends Player {
         if (remainingCD < 0){
             remainingCD = 0;
         }
+    }
+    @Override
+    public String toString(){
+        return name+"      Health: "+currentHealth+"/"+health+"     Attack: "+attack+"    Defense: "+defense+"     XP: "+XP+"/"+50*level+"\n   Cooldown "+remainingCD+"/"+CD+"         Level: "+level;
     }
 }

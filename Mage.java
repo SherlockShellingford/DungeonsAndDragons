@@ -12,10 +12,10 @@ public class Mage extends Player {
     private int range;
 
 
-    public Mage(String name, /*UIDataContext observer,8*/ int health, int attack, int defense, Pair<Integer, Integer> position,
+    public Mage(String name, UIDataContext observer, int health, int attack, int defense, Pair<Integer, Integer> position,
                 int spellPower, int manaPool, int cost, int hitTimes, int range){
         this.name = name;
-        //this.observer = observer;
+        this.observer = observer;
         this.health = health;
         this.currentHealth = health;
         this.attack = attack;
@@ -58,18 +58,22 @@ public class Mage extends Player {
         Enemy[] a = new Enemy[enemies.size()];
         int i = 0;
         for (Enemy enemy : enemies) {
-            if ((int) range(enemy) < range) {
+            if ((int) range(enemy) <= range) {
                 a[i] = enemy;
                 i++;
             }
         }
-        i--;
-        while (hits < hitTimes | hits == i + 1){
+
+        while (hits < hitTimes && hits < i){
             int r = RandomNumber.getInstance().nextInt(i);
             int dmg = spellPower - RandomNumber.getInstance().nextInt(a[r].defense);
             if (a[r] != null){
                 if (dmg > 0){
-                    a[r].health -= dmg;
+                    observer.update(this.name +" used blizzard and dealt "+dmg+" to "+a[r].name);
+                    a[r].currentHealth -= dmg;
+                    if(a[r].currentHealth<=0){
+                        observer.update(a[r].name+" died");
+                    }
                 }
                 a[r] = null;
                 hits++;
@@ -84,5 +88,9 @@ public class Mage extends Player {
         if (currentMana > manaPool){
             currentMana = manaPool;
         }
+    }
+    @Override
+    public String toString(){
+        return name+"      Health: "+currentHealth+"/"+health+"     Attack: "+attack+"    Defense: "+defense+"     XP: "+XP+"/"+50*level+"\n   Mana: "+currentMana+"/"+manaPool+"           Spell power: "+spellPower+"         Level: "+level;
     }
 }
