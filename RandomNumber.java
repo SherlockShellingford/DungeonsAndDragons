@@ -6,7 +6,7 @@ public class RandomNumber {
     }
     public static void setRandom(char c){
         if(c=='d'){
-            ourInstance=new DeterministicNumber(System.getProperty("user.dir") + "/random_numbers.txt");
+            ourInstance=new RandomDCode(MemoryManager.getPath() + "/random_numbers.txt");
         }
         if(c=='n'){
             ourInstance=new RandomND();

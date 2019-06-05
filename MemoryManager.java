@@ -10,7 +10,7 @@ public class MemoryManager {
     public static String getPath(){
         return path;
     }
-    public static char[][] getBoard(String path, String level){
+    public static char[][] getBoard(String level){
         char[][] board;
         if(path.charAt(path.indexOf(path.length()-1))!='\\'||path.charAt(path.indexOf(path.length()-1))=='/'){
             path=path+"/";

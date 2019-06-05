@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
-public class DeterministicNumber implements GameRandom{
+public class DeterministicNumber{
     int[] arr;
     int index;
     public DeterministicNumber(int[] arr){
