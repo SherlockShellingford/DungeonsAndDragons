@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,7 +23,7 @@ private void printEntireUI(){
     }
     System.out.println(DT.getCurrentCharacter());
 }
-public void startGame(){
+public void startGame(String mode){
     Scanner sc=new Scanner(System.in);
     PlayerOptions playerOptions=new PlayerOptions(DT);
     List<Player> playerList=playerOptions.getPlayerList();
@@ -33,6 +31,21 @@ public void startGame(){
         System.out.println(""+(i+1)+"   "+playerList.get(i).name+"      Health: "+playerList.get(i).health+"     Attack: "+playerList.get(i).attack+"      Defense: "+playerList.get(i).defense+"\n");
     }
     System.out.println(DT.getUI());
+    if (mode.equals("D")){
+        File file  = new File(MemoryManager.getPath() + "/user_actions.txt");
+        try {
+            Scanner scan = new Scanner(file);
+            Player player=playerList.get(scan.nextInt()-1);
+            GameManager.setGame(player,DT, levels[currentLevel]);
+            printEntireUI();
+            while(scan.hasNextLine()){
+                Dcycle(scan.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("no such file");;
+        }
+        return;
+    }
     System.out.println("Select player: ");
     int playernum=sc.nextInt();
     while(playerList.size()<playernum){
@@ -47,11 +60,29 @@ public void startGame(){
     printEntireUI();
 }
 
+
 public void cycle(){
 
     Scanner sc=new Scanner(System.in);
     String input=sc.nextLine();
     int end=GameManager.GameTick(input);
+    printEntireUI();
+    if(end==1){
+        System.out.println("You lost!");
+        System.exit(0);
+    }
+    if(end==2){
+        currentLevel=currentLevel+1;
+        GameManager.setGame(GameManager.getPlayer().get(0),DT,levels[currentLevel]);
+    }
+    if(end==3){
+        System.out.println("Invalid command");
+    }
+
+}
+
+public void Dcycle(String command){
+    int end=GameManager.GameTick(command);
     printEntireUI();
     if(end==1){
         System.out.println("You lost!");

@@ -64,7 +64,7 @@ public class Monster extends Enemy{
                     position=new Pair<Integer, Integer>(Formerposition.getKey(), Formerposition.getValue()+1);
                     break;
                 case 3:
-                    position=new Pair<Integer, Integer>(Formerposition.getKey()-1, Formerposition.getValue()-1);
+                    position=new Pair<Integer, Integer>(Formerposition.getKey(), Formerposition.getValue()-1);
                     break;
                 default:
 

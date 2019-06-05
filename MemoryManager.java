@@ -3,10 +3,19 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class MemoryManager {
-
-    public static char[][] getBoard(String level){
+    private static String path;
+    public static void setPath(String path2){
+        path=path2;
+    }
+    public static String getPath(){
+        return path;
+    }
+    public static char[][] getBoard(String path, String level){
         char[][] board;
-        File file = new File(System.getProperty("user.dir")+"/" + level + ".txt");
+        if(path.charAt(path.indexOf(path.length()-1))!='\\'||path.charAt(path.indexOf(path.length()-1))=='/'){
+            path=path+"/";
+        }
+        File file = new File(path + level + ".txt");
         Scanner sc;
         try {
              sc = new Scanner(file);
